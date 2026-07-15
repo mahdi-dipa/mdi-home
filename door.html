@@ -1,34 +1,23 @@
 <!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>MDI - قصر دیپا</title>
-</head>
+<html>
 <body>
-    <h2>🏰 قصر دیپا 🏰</h2>
-    <input type="text" id="msg" placeholder="پیام..." />
-    <button onclick="send()">بفرست</button>
+    <h2>🏰 تست قصر دیپا 🏰</h2>
+    <button onclick="test()">کلیک کن</button>
     <div id="out"></div>
-
     <script>
         const API = 'https://mdi-api-v3.mahdimazidi78.workers.dev';
-
-        async function send() {
-            const msg = document.getElementById('msg').value;
-            if (!msg) return;
-
-            document.getElementById('out').innerHTML = '⏳';
-
+        async function test() {
+            const out = document.getElementById('out');
+            out.innerHTML = '⏳';
             try {
                 const res = await fetch(API, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: msg })
+                    body: JSON.stringify({ message: 'سلام' })
                 });
                 const data = await res.json();
-                document.getElementById('out').innerHTML = data.reply;
+                out.innerHTML = data.reply;
             } catch (e) {
-                document.getElementById('out').innerHTML = '❌ خطا: ' + e.message;
+                out.innerHTML = '❌ ' + e.message;
             }
         }
     </script>
