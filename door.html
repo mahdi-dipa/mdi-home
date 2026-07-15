@@ -2,8 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDI - گفتگو با دیپا</title>
+    <title>MDI - قصر دیپا</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -26,12 +25,7 @@
             display: flex;
             flex-direction: column;
         }
-        .chat-header {
-            text-align: center;
-            padding: 15px;
-            border-bottom: 2px solid #e94560;
-            margin-bottom: 15px;
-        }
+        .chat-header { text-align: center; padding: 15px; border-bottom: 2px solid #e94560; margin-bottom: 15px; }
         .chat-header h1 { color: #e94560; font-size: 1.8em; }
         .chat-header p { color: #f0a500; }
         #chat-box {
@@ -42,11 +36,10 @@
             border-radius: 10px;
             margin-bottom: 15px;
         }
-        .message { margin-bottom: 15px; }
-        .user-message { text-align: left; }
-        .dipa-message { text-align: right; }
+        .message { margin-bottom: 15px; display: flex; }
+        .user-message { justify-content: flex-start; }
+        .dipa-message { justify-content: flex-end; }
         .bubble {
-            display: inline-block;
             max-width: 75%;
             padding: 10px 15px;
             border-radius: 20px;
@@ -91,7 +84,7 @@
         </div>
     </div>
     <script>
-        const API_URL = 'https://mdi-api-v3.workers.dev';
+        const API_URL = 'https://mdi-api-v3.mahdimazidi78.workers.dev';
 
         async function sendMessage() {
             const input = document.getElementById('user-input');
