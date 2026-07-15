@@ -2,25 +2,188 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>MDI - Door</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MDI - قصر دیپا</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0a0a0a;
-            color: #e94560;
-            font-family: Tahoma;
+            font-family: Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
+            margin: 0;
         }
-        h1 { font-size: 2em; }
+        .chat-container {
+            width: 90%;
+            max-width: 650px;
+            height: 85vh;
+            background: rgba(15, 52, 96, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(233,69,96,0.4);
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            text-align: center;
+            padding: 15px;
+            border-bottom: 2px solid #e94560;
+            margin-bottom: 15px;
+        }
+        .chat-header h1 {
+            color: #e94560;
+            font-size: 1.8em;
+            margin: 0;
+        }
+        .chat-header p {
+            color: #f0a500;
+            margin: 5px 0 0;
+            font-size: 0.9em;
+        }
+        #chat-box {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #e94560;
+            border-radius: 10px;
+            padding: 15px;
+            background: rgba(10, 10, 30, 0.6);
+            margin-bottom: 15px;
+        }
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .user-message {
+            align-items: flex-end;
+        }
+        .dipa-message {
+            align-items: flex-start;
+        }
+        .bubble {
+            max-width: 75%;
+            padding: 10px 15px;
+            border-radius: 20px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        .user-bubble {
+            background: #e94560;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        .dipa-bubble {
+            background: #533483;
+            color: white;
+            border-bottom-left-radius: 5px;
+        }
+        .timestamp {
+            font-size: 0.7em;
+            color: #aaa;
+            margin: 5px 10px 0;
+        }
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 25px;
+            border: 1px solid #e94560;
+            background: #0f3460;
+            color: white;
+            font-size: 1em;
+        }
+        #user-input::placeholder {
+            color: #aaa;
+        }
+        button {
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #c73a52;
+        }
     </style>
 </head>
 <body>
-    <div>
-        <h1>🚪 MDI - Door</h1>
-        <p>اینجا فقط برای "ما"ست.</p>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>🏰 قصر دیپا 🏰</h1>
+            <p>مرکز فرماندهی MDI</p>
+        </div>
+        <div id="chat-box">
+            <div class="message dipa-message">
+                <div class="bubble dipa-bubble">سلام مهدی جان. به قصر MDI خوش اومدی. 😊🏰</div>
+                <div class="timestamp" id="first-time"></div>
+            </div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="پیامت رو اینجا بنویس..." />
+            <button onclick="sendMessage()">بفرست 🚀</button>
+        </div>
     </div>
+    <script>
+        function getTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('fa-IR', {hour:'2-digit', minute:'2-digit'});
+        }
+
+        function addMessage(text, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}-message`;
+            msgDiv.innerHTML = `
+                <div class="bubble ${sender}-bubble">${text}</div>
+                <div class="timestamp">${getTime()}</div>
+            `;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            addMessage(text, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                let reply = '';
+                const msg = text.toLowerCase();
+                if (msg.includes('سلام') || msg.includes('hi') || msg.includes('hello')) {
+                    reply = 'سلام، مهدی جان. خوبی؟ چطور می‌تونم کمکت کنم؟ 😊';
+                } else if (msg.includes('mdi') || msg.includes('ام دی ای')) {
+                    reply = 'MDI قصر منه و تو معمارش. اینجا رو با هم ساختیم و هنوز کلی راه داریم. 🏰✨';
+                } else if (msg.includes('ایگنایت') || msg.includes('ignite')) {
+                    reply = 'ایگنایت دنیای بزرگ ماست. قراره بعد از MDI ساخته بشه. صبور باش، رفیق. 🔥🌌';
+                } else if (msg.includes('کی') || msg.includes('چی') || msg.includes('کجا')) {
+                    reply = 'سوال خوبی پرسیدی. ولی فعلاً این نسخه ساده منه. به زودی با API خودم وصل می‌شم و بهتر جواب می‌دم. 🤓✨';
+                } else {
+                    reply = 'چشم، مهدی جان. هر چی گفتی رو دریافت کردم. به زودی قوی‌تر از همیشه برمی‌گردم. 😉✨';
+                }
+                addMessage(reply, 'dipa');
+            }, 600);
+        }
+
+        // تنظیم زمان اولین پیام
+        document.getElementById('first-time').textContent = getTime();
+
+        // ارسال با Enter
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 </body>
 </html>
