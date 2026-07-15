@@ -100,7 +100,7 @@
                     body: JSON.stringify({ message: text })
                 });
                 const data = await response.json();
-                addMessage(data.reply, 'dipa');
+                addMessage(data.reply || 'پاسخی دریافت نشد.', 'dipa');
             } catch (e) {
                 addMessage('ارتباط با قصر قطع شد. 😢', 'dipa');
             }
